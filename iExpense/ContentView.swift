@@ -14,41 +14,14 @@ class User {
 }
 
 struct ContentView: View {
-    @State private var user = User()
-    @State private var showSheet = false
+    @State private var count = UserDefaults.standard.integer(forKey: "Count")
     var body: some View {
-        VStack {
-            Text("Your name is \(user.firstName) \(user.lastName).")
-            
-            TextField("First name", text: $user.firstName)
-            TextField("Last name", text: $user.lastName)
-            Button("OpenSheet") {
-                showSheet.toggle()
-            }
-        }
-        .sheet(isPresented: $showSheet) {
-            BottomSheet(name: "Bottom Sheet Properties")
+        Button("Count is \(count)"){
+            count += 1
+            UserDefaults.standard.set(count, forKey: "Count")
         }
     }
-}
 
-struct BottomSheet: View {
-    let name :String
-    
-    @Environment(\.dismiss) var dismiss
-    
-    var body: some View {
-        ZStack{
-            Color.red
-            VStack{
-                Text(name)
-                Button("Dismiss") {
-                    dismiss()
-                }
-            }
-        }
-        .ignoresSafeArea()
-    }
 }
 
 #Preview {
