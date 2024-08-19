@@ -7,13 +7,38 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    @AppStorage("count") private var tapCount = 0
+struct User: Codable {
+    let name : String
+    let email: String
+}
 
+struct ContentView: View {
+    @State private var user : User? = nil
+    
     var body: some View {
-        Button("Tap count: \(tapCount)") {
-            tapCount += 1
-            print(UserDefaults.standard.integer(forKey: "count"))
+        VStack{
+            
+            if let user {
+                Text("User \(user.name) ; \(user.email)")
+            }
+            
+            Button("Save User ") {
+                let encoder = JSONEncoder()
+                let tempUser = User(name: "Test", email: "test@gmail.com")
+                if let data = try? encoder.encode(tempUser) {
+                    UserDefaults.standard.set(data, forKey: "UserData")
+                }
+            }
+            
+            Button("Fetch User ") {
+                let decoder = JSONDecoder()
+                if let userData = UserDefaults.standard.data(forKey: "UserData") {
+                    if let decodedUser = try? decoder.decode(User.self, from: userData) {
+                        user = decodedUser
+                    }
+                }
+            }
+            
         }
     }
 }
