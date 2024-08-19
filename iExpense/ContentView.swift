@@ -7,21 +7,15 @@
 
 import SwiftUI
 
-@Observable
-class User {
-    var firstName = "Bilbo"
-    var lastName = "Baggins"
-}
-
 struct ContentView: View {
-    @State private var count = UserDefaults.standard.integer(forKey: "Count")
+    @AppStorage("count") private var tapCount = 0
+
     var body: some View {
-        Button("Count is \(count)"){
-            count += 1
-            UserDefaults.standard.set(count, forKey: "Count")
+        Button("Tap count: \(tapCount)") {
+            tapCount += 1
+            print(UserDefaults.standard.integer(forKey: "count"))
         }
     }
-
 }
 
 #Preview {
