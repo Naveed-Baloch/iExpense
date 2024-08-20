@@ -15,31 +15,28 @@ struct User: Codable {
 struct ContentView: View {
     @State private var user : User? = nil
     
+    @State private var expanses = Expenses()
     var body: some View {
-        VStack{
-            
-            if let user {
-                Text("User \(user.name) ; \(user.email)")
-            }
-            
-            Button("Save User ") {
-                let encoder = JSONEncoder()
-                let tempUser = User(name: "Test", email: "test@gmail.com")
-                if let data = try? encoder.encode(tempUser) {
-                    UserDefaults.standard.set(data, forKey: "UserData")
+        NavigationStack {
+            List {
+                ForEach(expanses.items, id: \.name) { item in
+                    Text(item.name)
                 }
+                .onDelete(perform: removeExpense)
             }
-            
-            Button("Fetch User ") {
-                let decoder = JSONDecoder()
-                if let userData = UserDefaults.standard.data(forKey: "UserData") {
-                    if let decodedUser = try? decoder.decode(User.self, from: userData) {
-                        user = decodedUser
-                    }
+            .toolbar(content: {
+                EditButton()
+                Button("Add"){
+                    let expanse = ExpenseItem(name: "Food", type: "Personal", double: 12.0)
+                    expanses.items.append(expanse)
                 }
-            }
-            
+            })
+            .navigationTitle("IExpense")
         }
+    }
+    
+    func removeExpense(at offset: IndexSet) {
+        expanses.items.remove(atOffsets: offset)
     }
 }
 
