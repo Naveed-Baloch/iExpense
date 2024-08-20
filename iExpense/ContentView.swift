@@ -19,7 +19,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             List {
-                ForEach(expanses.items, id: \.name) { item in
+                ForEach(expanses.items) { item in
                     Text(item.name)
                 }
                 .onDelete(perform: removeExpense)
@@ -27,7 +27,7 @@ struct ContentView: View {
             .toolbar(content: {
                 EditButton()
                 Button("Add"){
-                    let expanse = ExpenseItem(name: "Food", type: "Personal", double: 12.0)
+                    let expanse = ExpenseItem(id: UUID(), name: "Food", type: "Personal", double: 12.0)
                     expanses.items.append(expanse)
                 }
             })
