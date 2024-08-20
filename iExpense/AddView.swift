@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 struct AddView: View{
-    @State private var name = ""
     var expenses: Expenses
+    @State private var name = ""
     @State private var amount = 0.0
     @State private var type = ExpenseType.personal
     
@@ -32,10 +32,16 @@ struct AddView: View{
                 
             }
             .toolbar{
-                Button("Save") {
-                    let expense = ExpenseItem(id: UUID(), name: name, type: type, double: amount)
-                    expenses.items.append(expense)
-                    dismiss()
+                if(!name.isEmpty && amount > 0.0) {
+                    Button("Save") {
+                        let expense = ExpenseItem(id: UUID(), name: name, type: type, double: amount)
+                        expenses.items.append(expense)
+                        dismiss()
+                    }
+                } else  {
+                    Button("Dismiss") {
+                        dismiss()
+                    }
                 }
             }
             .navigationTitle("Add New Expense")
