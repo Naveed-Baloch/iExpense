@@ -10,8 +10,11 @@ import SwiftUI
 
 struct AddView: View{
     @State private var name = ""
+    var expenses: Expenses
     @State private var amount = 0.0
     @State private var type = ExpenseType.personal
+    
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         NavigationStack {
@@ -28,6 +31,13 @@ struct AddView: View{
                     .keyboardType(.decimalPad)
                 
             }
+            .toolbar{
+                Button("Save") {
+                    let expense = ExpenseItem(id: UUID(), name: name, type: type, double: amount)
+                    expenses.items.append(expense)
+                    dismiss()
+                }
+            }
             .navigationTitle("Add New Expense")
             .navigationBarTitleDisplayMode(.inline)
         }
@@ -36,5 +46,5 @@ struct AddView: View{
 
 
 #Preview {
-    AddView()
+    AddView(expenses: Expenses())
 }

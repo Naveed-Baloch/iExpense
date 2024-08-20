@@ -16,6 +16,7 @@ struct ContentView: View {
     @State private var user : User? = nil
     
     @State private var expanses = Expenses()
+    @State private var showAddView = false
     var body: some View {
         NavigationStack {
             List {
@@ -25,13 +26,18 @@ struct ContentView: View {
                 .onDelete(perform: removeExpense)
             }
             .toolbar(content: {
-                EditButton()
-                Button("Add"){
-                    let expanse = ExpenseItem(id: UUID(), name: "Food", type: ExpenseType.personal, double: 12.0)
-                    expanses.items.append(expanse)
+                if (!expanses.items.isEmpty) {
+                    EditButton()
+                }
+                
+                Button("Add", systemImage: "plus"){
+                    showAddView.toggle()
                 }
             })
             .navigationTitle("IExpense")
+            .sheet(isPresented: $showAddView, content: {
+                AddView(expenses: expanses)
+            })
         }
     }
     
