@@ -16,6 +16,7 @@
 		1D821C542C738C8400F1827C /* iExpenseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D821C532C738C8400F1827C /* iExpenseTests.swift */; };
 		1D821C5E2C738C8400F1827C /* iExpenseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D821C5D2C738C8400F1827C /* iExpenseUITests.swift */; };
 		1D821C602C738C8400F1827C /* iExpenseUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D821C5F2C738C8400F1827C /* iExpenseUITestsLaunchTests.swift */; };
+		1DEF0AF02C74EAD300C7AAF3 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEF0AEF2C74EAD300C7AAF3 /* AddView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		1D821C592C738C8400F1827C /* iExpenseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iExpenseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D821C5D2C738C8400F1827C /* iExpenseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iExpenseUITests.swift; sourceTree = "<group>"; };
 		1D821C5F2C738C8400F1827C /* iExpenseUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iExpenseUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		1DEF0AEF2C74EAD300C7AAF3 /* AddView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 		1D821C412C738C8300F1827C /* iExpense */ = {
 			isa = PBXGroup;
 			children = (
+				1DEF0AEF2C74EAD300C7AAF3 /* AddView.swift */,
 				1D821C422C738C8300F1827C /* iExpenseApp.swift */,
 				1D821C442C738C8300F1827C /* ContentView.swift */,
 				1D821C462C738C8400F1827C /* Assets.xcassets */,
@@ -265,6 +268,7 @@
 			files = (
 				1D4FC0672C74DE7300A480A2 /* Expenses.swift in Sources */,
 				1D821C452C738C8300F1827C /* ContentView.swift in Sources */,
+				1DEF0AF02C74EAD300C7AAF3 /* AddView.swift in Sources */,
 				1D4FC0652C74DDDE00A480A2 /* ExpenseItem.swift in Sources */,
 				1D821C432C738C8300F1827C /* iExpenseApp.swift in Sources */,
 			);
