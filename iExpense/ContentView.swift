@@ -27,7 +27,7 @@ struct ContentView: View {
             .toolbar(content: {
                 EditButton()
                 Button("Add"){
-                    let expanse = ExpenseItem(id: UUID(), name: "Food", type: "Personal", double: 12.0)
+                    let expanse = ExpenseItem(id: UUID(), name: "Food", type: ExpenseType.personal, double: 12.0)
                     expanses.items.append(expanse)
                 }
             })

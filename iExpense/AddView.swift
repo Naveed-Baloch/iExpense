@@ -8,10 +8,6 @@
 import Foundation
 import SwiftUI
 
-enum ExpenseType: String, CaseIterable {
-    case personal = "Personal", business = "Business"
-}
-
 struct AddView: View{
     @State private var name = ""
     @State private var amount = 0.0

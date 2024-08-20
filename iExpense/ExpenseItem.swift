@@ -11,6 +11,10 @@ import Foundation
 struct ExpenseItem: Identifiable {
     let id: UUID
     let name: String
-    let type: String
+    let type: ExpenseType
     let double: Double
+}
+
+enum ExpenseType: String, CaseIterable {
+    case personal = "Personal", business = "Business"
 }
