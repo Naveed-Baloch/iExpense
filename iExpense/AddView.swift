@@ -19,16 +19,23 @@ struct AddView: View{
     var body: some View {
         NavigationStack {
             Form {
-                TextField("Name", text: $name)
+                Section("Expense Name") {
+                    TextField("Name", text: $name)
+                }
                 
-                Picker("Type", selection: $type, content: {
-                    ForEach(ExpenseType.allCases, id: \.self) { item in
-                        Text(item.rawValue)
-                    }
-                })
+                Section {
+                    Picker("Type", selection: $type, content: {
+                        ForEach(ExpenseType.allCases, id: \.self) { item in
+                            Text(item.rawValue)
+                        }
+                    })
+                    .pickerStyle(.navigationLink)
+                }
                 
-                TextField("Amount", value: $amount,format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
-                    .keyboardType(.decimalPad)
+                Section("Amount") {
+                    TextField("Amount", value: $amount,format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                        .keyboardType(.decimalPad)
+                }
                 
             }
             .toolbar{
