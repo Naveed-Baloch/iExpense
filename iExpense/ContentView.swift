@@ -1,48 +1,88 @@
-//
-//  ContentView.swift
-//  iExpense
-//
-//  Created by Naveed on 19/08/2024.
-//
-
 import SwiftUI
 
-struct User: Codable {
-    let name : String
-    let email: String
-}
-
 struct ContentView: View {
-    @State private var user : User? = nil
-    
-    @State private var expanses = Expenses()
+    @State private var expenses = Expenses()
     @State private var showAddView = false
+
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(expanses.items) { item in
-                    Text(item.name)
+            ZStack {
+                if expenses.items.isEmpty {
+                    Text("You don't have any expenses. \n Try adding now!")
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    List {
+                        let personalExpenses = expenses.items.filter { item in item.type == .personal }
+                        let businessExpenses = expenses.items.filter { item in item.type == .business }
+                        
+                        if !personalExpenses.isEmpty {
+                            Section(header: Text("Personal Expenses")) {
+                                ForEach(personalExpenses) { item in
+                                    ExpenseRow(item: item)
+                                }
+                                .onDelete { indexSet in
+                                    removeExpense(at: indexSet, from: personalExpenses)
+                                }
+                            }
+                        }
+
+                        if !businessExpenses.isEmpty {
+                            Section(header: Text("Business Expenses")) {
+                                ForEach(businessExpenses) { item in
+                                    ExpenseRow(item: item)
+                                }
+                                .onDelete { indexSet in
+                                    removeExpense(at: indexSet, from: businessExpenses)
+                                }
+                            }
+                        }
+                    }
                 }
-                .onDelete(perform: removeExpense)
             }
-            .toolbar(content: {
-                if (!expanses.items.isEmpty) {
+            .toolbar {
+                if !expenses.items.isEmpty {
                     EditButton()
                 }
-                
-                Button("Add", systemImage: "plus"){
+
+                Button {
                     showAddView.toggle()
+                } label: {
+                    Image(systemName: "plus")
                 }
-            })
+            }
             .navigationTitle("IExpense")
-            .sheet(isPresented: $showAddView, content: {
-                AddView(expenses: expanses)
-            })
+            .sheet(isPresented: $showAddView) {
+                AddView(expenses: expenses)
+            }
         }
     }
+
+    func removeExpense(at offsets: IndexSet, from filteredExpenses: [ExpenseItem]) {
+        for offset in offsets {
+            if let index = expenses.items.firstIndex(where: {  item in item.id == filteredExpenses[offset].id }) {
+                expenses.items.remove(at: index)
+            }
+        }
+    }
+}
+
+struct ExpenseRow: View {
+    let item: ExpenseItem
     
-    func removeExpense(at offset: IndexSet) {
-        expanses.items.remove(atOffsets: offset)
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(item.name)
+                    .font(.headline)
+                Text(item.type.rawValue)
+                    .font(.subheadline)
+            }
+            Spacer()
+            Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                .foregroundColor(item.amount <= 10 ? .green : item.amount < 100 ? .orange : .red)
+                .bold()
+        }
     }
 }
 

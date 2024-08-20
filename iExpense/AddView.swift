@@ -27,14 +27,14 @@ struct AddView: View{
                     }
                 })
                 
-                TextField("Amount", value: $amount,format: .currency(code: "USD"))
+                TextField("Amount", value: $amount,format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                     .keyboardType(.decimalPad)
                 
             }
             .toolbar{
                 if(!name.isEmpty && amount > 0.0) {
                     Button("Save") {
-                        let expense = ExpenseItem(id: UUID(), name: name, type: type, double: amount)
+                        let expense = ExpenseItem(id: UUID(), name: name, type: type, amount: amount)
                         expenses.items.append(expense)
                         dismiss()
                     }
